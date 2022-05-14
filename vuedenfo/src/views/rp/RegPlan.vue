@@ -161,9 +161,10 @@
                         width="200"
                         label="操作">
                     <template slot-scope="scope">
-                        <el-button @click="showEditRPView(scope.row)" style="padding: 3px" size="mini">编辑</el-button>
-                        <el-button @click="interfaceRP(scope.row)" style="padding: 3px" size="mini" type="primary">发送药联接口</el-button>
-                        <el-button @click="deleteRP(scope.row)" style="padding: 3px" size="mini" type="danger">删除</el-button>
+                        <el-button @click="showEditRPView(scope.row)" style="padding: 1px" size="mini">编辑</el-button>
+                      <el-button @click="dataParse(scope.row)" style="padding: 1px" size="mini" :disabled="showpaser">解析</el-button>
+                        <el-button @click="interfaceRP(scope.row)" style="padding: 1px" size="mini" type="primary">发送药联</el-button>
+                        <el-button @click="deleteRP(scope.row)" style="padding: 1px" size="mini" type="danger">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -242,6 +243,7 @@
                 },
                 title: '',
                 showAdvanceSearchView: false,
+                showpaser: false,
                 rps: [],
                 loading: false,
                 popVisible: false,
@@ -294,6 +296,13 @@
         methods: {
             exportData() {
                 window.open('/rp/basic/export', '_parent');
+            },
+            dataParse(data) {
+              if (data.method == "getRegisterPlan"){
+                window.open("/rp/basic/parse/" + data.id, '_parent');
+              }else{
+                this.$alert("无法解析！仅支持getRegisterPlan接口！")
+              }
             },
             emptyRP() {
                 this.rp = {
