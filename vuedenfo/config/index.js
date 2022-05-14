@@ -12,15 +12,15 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
 
-      '/': {//遇到该请求则进行代理
-        target: 'http://localhost:8081/', // 设置你调用的接口域名和端口号
-        //代理的目标地址是http://localhost:8081
-        //相当于http://localhost:8081/xx
-        changeOrigin: true,   //开启跨域
-        pathRewrite: {
-          '^/': '' //重写路径将'/'转化为''
-        }
-      }
+      // '/': {//遇到该请求则进行代理
+      //   target: 'http://localhost:8081/', // 设置你调用的接口域名和端口号
+      //   //代理的目标地址是http://localhost:8081
+      //   //相当于http://localhost:8081/xx
+      //   changeOrigin: true,   //开启跨域
+      //   pathRewrite: {
+      //     '^/': '' //重写路径将'/'转化为''
+      //   }
+      // }
     },
 
 
