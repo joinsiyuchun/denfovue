@@ -28,17 +28,17 @@
             </div>
             <transition name="slide-fade">
                 <div v-show="showAdvanceSearchView"
-                     style="border: 1px solid #409eff;border-radius: 5px;box-sizing: border-box;padding: 5px;margin: 10px 0px;font-size: 14px;">
+                     style="border: 1px solid #409eff;border-radius: 5px;box-sizing: border-box;padding: 5px;margin: 10px 0px;font-size: 12px;">
                     <el-row>
-                      <el-col :span="8">
+                      <el-col :span="5">
                         请求id:<el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit" v-model="searchValue.id"
                                        placeholder="请输入接口请求ID"></el-input>
                       </el-col>
 
-                        <el-col :span="8">
+                        <el-col :span="5">
                           接口名称:
                           <el-select v-model="searchValue.method" placeholder="请选择接口" size="mini"
-                                     style="width: 120px;" >
+                                     style="width: 150px;" >
                             <el-option
                               v-for="item in methodoptions"
                               :key="item.value"
@@ -47,34 +47,34 @@
                             </el-option>
                           </el-select>
                         </el-col>
-                        <el-col :span="8">
+                        <el-col :span="5">
                           状态:
                           <el-select v-model="searchValue.status" placeholder="请选择状态" size="mini"
-                                        style="width: 120px;" >
-                          <el-option
-                            v-for="item in statusoptions"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                          </el-option>
-                        </el-select>
+                                        style="width: 150px;" >
+                            <el-option
+                              v-for="item in statusoptions"
+                              :key="item.value"
+                              :label="item.label"
+                              :value="item.value">
+                            </el-option>
+                          </el-select>
                         </el-col>
-
+                        <el-col :span="9">
+                            创建日期:
+                            <el-date-picker
+                              v-model="searchValue.createDTScope"
+                              type="daterange"
+                              size="mini"
+                              unlink-panels
+                              value-format="yyyy-MM-dd"
+                              range-separator="至"
+                              start-placeholder="开始日期"
+                              end-placeholder="结束日期">
+                            </el-date-picker>
+                          </el-col>
                     </el-row>
                     <el-row style="margin-top: 10px">
-                      <el-col :span="10">
-                        创建日期:
-                        <el-date-picker
-                          v-model="searchValue.createDTScope"
-                          type="daterange"
-                          size="mini"
-                          unlink-panels
-                          value-format="yyyy-MM-dd"
-                          range-separator="至"
-                          start-placeholder="开始日期"
-                          end-placeholder="结束日期">
-                        </el-date-picker>
-                      </el-col>
+                     
                       <el-col :span="14">
 <!--                        最后更新日期:-->
 <!--                        <el-date-picker-->
@@ -108,7 +108,8 @@
                     element-loading-text="正在加载..."
                     element-loading-spinner="el-icon-loading"
                     element-loading-background="rgba(0, 0, 0, 0.8)"
-                    style="width: 100%">
+                    style="width: 100%"
+                    :header-row-class-name="tableRowClassName">
                 <el-table-column
                         type="selection"
                         width="55">
@@ -185,7 +186,7 @@
             <div>
                 <el-form :model="rp" :rules="rules" ref="rpForm">
                     <el-row>
-                        <el-col :span="8">
+                        <el-col :span="4">
                           <el-form-item label="接口:" prop="method">
                             <el-select v-model="rp.method" placeholder="请选择接口" size="mini"
                                        style="width: 120px;">
@@ -198,7 +199,7 @@
                             </el-select>
                           </el-form-item>
                         </el-col>
-                        <el-col :span="16">
+                        <el-col :span="4">
                           <el-form-item label="状态:" prop="status">
                             <el-select v-model="rp.status" placeholder="请选择状态" size="mini"
                                        style="width: 120px;">
@@ -254,10 +255,10 @@
                 keyword: '',
                 size: 10,
                 statusoptions: [{
-                  value: '1',
+                  value: 1,
                   label: '请求完成'
                 }, {
-                  value: '2',
+                  value: 2,
                   label: '排队中'
                 }],
                 methodoptions: [{
@@ -300,8 +301,10 @@
             dataParse(data) {
               if (data.method == "getRegisterPlan"){
                 window.open("/rp/basic/parse/" + data.id, '_parent');
+              }else if(data.method == "getPatientInfo"){
+                window.open("/rp/basic/parsepi/" + data.id, '_parent');
               }else{
-                this.$alert("无法解析！仅支持getRegisterPlan接口！")
+                this.$alert("无法解析！仅支持解析花名册和预约计划接口！")
               }
             },
             emptyRP() {
@@ -409,6 +412,13 @@
                 this.title = '添加记录';
                 this.dialogVisible = true;
             },
+            tableRowClassName({row, rowIndex}) {
+              // console.log(rowIndex)
+              if (rowIndex === 0) {
+                return 'warning-row';
+              } 
+              return '';
+            },
             initRPs(type) {
                 this.loading = true;
                 let url = '/rp/basic/?page=' + this.page + '&size=' + this.size;
@@ -463,5 +473,9 @@
     {
         transform: translateX(10px);
         opacity: 0;
+    }
+
+     .warning-row th {
+      background: #E6F7FF!important
     }
 </style>

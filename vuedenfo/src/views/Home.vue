@@ -1,27 +1,14 @@
 <template>
     <div>
-        <el-container>
-            <el-header class="homeHeader">
-                <div class="title">敦复渠道管理</div>
-                <div>
-<!--                    <el-button icon="el-icon-bell" type="text" style="margin-right: 8px;color: #000000;" size="normal" @click="goChat"></el-button>-->
-                    <el-dropdown class="userInfo" @command="commandHandler">
-  <span class="el-dropdown-link">
-    {{user.name}}<i><img :src="user.userface" alt=""></i>
-  </span>
-                        <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item command="userinfo">个人中心</el-dropdown-item>
-                            <el-dropdown-item command="logout" divided>注销登录</el-dropdown-item>
-                        </el-dropdown-menu>
-                    </el-dropdown>
-                </div>
-            </el-header>
-            <el-container>
-                <el-aside width="200px">
+        <el-container style="height:800px; ">
+            <el-aside style="width: 200px;">
+                    <div class="sysname">
+                       敦复渠道管理平台 
+                    </div>
                     <el-menu router unique-opened>
                         <el-submenu :index="index+''" v-for="(item,index) in routes" v-if="!item.hidden" :key="index">
                             <template slot="title">
-                                <i style="color: #409eff;margin-right: 5px" :class="item.iconCls"></i>
+                                <i style="color: #fff;margin-right: 13px" :class="item.iconCls"></i>
                                 <span>{{item.name}}</span>
                             </template>
                             <el-menu-item :index="child.path" v-for="(child,indexj) in item.children" :key="indexj">
@@ -30,7 +17,23 @@
 
                         </el-submenu>
                     </el-menu>
-                </el-aside>
+            </el-aside>
+          
+            <el-container>
+                <el-header class="homeHeader">
+                    <div class="title"></div>
+                    <div>
+                        <el-dropdown class="userInfo" @command="commandHandler">
+                            <span class="el-dropdown-link">
+                            {{user.name}}<i class="fa fa-user-circle" style="color: rgb(255, 255, 255); margin-left: 13px;"></i>
+                            </span>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item command="userinfo">个人中心</el-dropdown-item>
+                                <el-dropdown-item command="logout" divided>注销登录</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </div>
+                </el-header>
                 <el-main>
                     <el-breadcrumb separator-class="el-icon-arrow-right" v-if="this.$router.currentRoute.path!='/home'">
                         <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
@@ -109,13 +112,13 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0px 15px;
+        padding: 0px 50px;
         box-sizing: border-box;
     }
 
     .homeHeader .title {
-        font-size: 30px;
-        font-family: 华文行楷;
+        font-family: PingFangSC-Regular;
+        font-size: 24px;
         color: #ffffff
     }
 
@@ -133,5 +136,56 @@
     .el-dropdown-link {
         display: flex;
         align-items: center;
+        color: #ffffff;
+    }
+
+    .el-submenu .el-submenu__title {
+        background-color: #001529;
+        color: #ffffff;
+    }
+
+    .el-menu .el-menu-item:hover{
+        outline: 0 !important;
+        color: #ffffff !important;
+        background: #001529!important;
+    }
+    .el-menu .el-menu-item.is-active {
+        color: #fff !important;
+        background: #1890FF!important;
+        font-size: 14px;
+    }
+    .el-submenu .el-submenu__title:hover {
+        color: #fff !important;
+        background: #001529!important;
+    }
+
+    .el-menu .el-menu-item{
+        background-color: #001529;
+        color: #fff;
+    }
+
+    .el-aside{
+        background-color: #001529;
+        height:800px;
+        color: #fff !important;
+    }
+
+    .sysname{
+        min-height:52px;
+        position:relative;
+        display:flex;
+        align-items:center;
+        justify-content: center;
+        font-family: PingFangSC-Regular;
+        font-size: 20px;
+        color: #ffffff
+    }
+
+    .el-submenu__title{
+        font-size: 16px;
+    }
+    
+    .el-menu{
+        border-right: solid 0px #001529;
     }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div >
         <div>
             <div style="display: flex;justify-content: space-between">
                 <div>
@@ -40,29 +40,43 @@
             </div>
             <transition name="slide-fade">
                 <div v-show="showAdvanceSearchView"
-                     style="border: 1px solid #409eff;border-radius: 5px;box-sizing: border-box;padding: 5px;margin: 10px 0px;font-size: 14px;">
+                     style="border: 1px solid #409eff;border-radius: 5px;box-sizing: border-box;padding: 5px;margin: 10px 0px;font-size: 12px;">
                     <el-row>
-                      <el-col :span="6">
-                        订单编号:<el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit" v-model="searchValue.orderNo"
+                      <el-col :span="8" align="left">
+                        订单编号:<el-input size="mini" style="width: 150px; margin-left:14px" prefix-icon="el-icon-edit" v-model="searchValue.orderNo"
                                        placeholder="请输入预订单号"></el-input>
                       </el-col>
-                        <el-col :span="6">
-                            人员编号:<el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit" v-model="searchValue.patIndexNo"
+                        <el-col :span="8" align="left">
+                            人员编号:<el-input size="mini" style="width: 150px; margin-left:14px" prefix-icon="el-icon-edit" v-model="searchValue.patIndexNo"
                                            placeholder="请输入人员编号"></el-input>
                         </el-col>
-                        <el-col :span="6">
-                            姓名:<el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit" v-model="searchValue.name"
-                                         placeholder="请输入人员姓名"></el-input>
-                        </el-col>
-                        <el-col :span="6">
-                            手机号:<el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit" v-model="searchValue.telephone"
-                                          placeholder="请输入员工手机号"></el-input>
-                        </el-col>
+                         <el-col :span="8" align="left">
+                        订单状态:
+                        <el-select v-model="searchValue.status" placeholder="请输入状态" size="mini"
+                                   style="width: 150px; margin-left:14px;" >
+                          <el-option
+                            v-for="item in statusoptions"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                          </el-option>
+                        </el-select>
+                      </el-col>
+                       
+                        
 
                     </el-row>
-                    <el-row style="margin-top: 10px">
-
-                      <el-col :span="12">
+                    <el-row style="margin-top: 10px; ">
+                        <el-col :span="8" align="left" >
+                            手机号码:<el-input size="mini" style="width: 150px; margin-left:14px" prefix-icon="el-icon-edit" v-model="searchValue.telephone"
+                                          placeholder="请输入员工手机号"></el-input>
+                        </el-col>
+                      
+                      <el-col :span="8" align="left">
+                            人员姓名:<el-input size="mini" style="width: 150px; margin-left:14px" prefix-icon="el-icon-edit" v-model="searchValue.name"
+                                         placeholder="请输入人员姓名"></el-input>
+                      </el-col>
+                      <el-col :span="8" align="left">
                         创建日期:
                         <el-date-picker
                           v-model="searchValue.createDTScope"
@@ -72,31 +86,9 @@
                           value-format="yyyy-MM-dd"
                           range-separator="至"
                           start-placeholder="开始日期"
-                          end-placeholder="结束日期">
+                          end-placeholder="结束日期"
+                          style="margin-left:14px;">
                         </el-date-picker>
-                      </el-col>
-                      <el-col :span="12">
-                        状态:
-                        <el-select v-model="searchValue.status" placeholder="请输入状态" size="mini"
-                                   style="width: 120px;" >
-                          <el-option
-                            v-for="item in statusoptions"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                          </el-option>
-                        </el-select>
-<!--                        最后更新日期:-->
-<!--                        <el-date-picker-->
-<!--                          v-model="searchValue.updateDTScope"-->
-<!--                          type="daterange"-->
-<!--                          size="mini"-->
-<!--                          unlink-panels-->
-<!--                          value-format="yyyy-MM-dd"-->
-<!--                          range-separator="至"-->
-<!--                          start-placeholder="开始日期"-->
-<!--                          end-placeholder="结束日期">-->
-<!--                        </el-date-picker>-->
                       </el-col>
                     </el-row>
 
@@ -118,7 +110,8 @@
                     element-loading-text="正在加载..."
                     element-loading-spinner="el-icon-loading"
                     element-loading-background="rgba(0, 0, 0, 0.8)"
-                    style="width: 100%">
+                    style="width: 100%"
+                    :header-row-class-name="tableRowClassName">
                 <el-table-column
                         type="selection"
                         width="55">
@@ -207,46 +200,48 @@
                 <el-form :model="st" :rules="rules" ref="stForm">
 
                     <el-row>
-                      <el-col :span="6">
+                      <el-col :span="4">
                         <el-form-item label="记录编号:" prop="orderNo">
                           <el-input size="mini" style="width: 120px" prefix-icon="el-icon-edit"
                                     v-model="st.orderNo" placeholder="请输入记录编号"></el-input>
                         </el-form-item>
                       </el-col>
-                        <el-col :span="6">
+                        <el-col :span="4">
                             <el-form-item label="人员编号:" prop="patIndexNo">
                                 <el-input size="mini" style="width: 120px" prefix-icon="el-icon-edit"
                                           v-model="st.patIndexNo" placeholder="请输入人员编号"></el-input>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="6">
+                        <el-col :span="5">
                             <el-form-item label="姓名:" prop="name">
                                 <el-input size="mini" style="width: 150px" prefix-icon="el-icon-message"
                                           v-model="st.name" placeholder="请输入人员姓名"></el-input>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="6">
+                        <el-col :span="7">
                             <el-form-item label="电话号码:" prop="telephone">
                                 <el-input size="mini" style="width: 200px" prefix-icon="el-icon-edit"
                                           v-model="st.telephone" placeholder="请输入电话号码"></el-input>
                             </el-form-item>
                         </el-col>
-                    </el-row>
+                    
+                        <el-col :span="4">
+                          <el-form-item label="状态:" prop="status">
+                              <el-select v-model="st.status" placeholder="请输入状态" size="mini"
+                                        style="width: 120px;">
+                                <el-option
+                                  v-for="item in statusoptions"
+                                  :key="item.value"
+                                  :label="item.label"
+                                  :value="item.value">
+                                </el-option>
+                              </el-select>
+                          </el-form-item>
+                        </el-col>
+                    
+                  </el-row>
                   <el-row>
-                    <el-col :span="6">
-                      <el-form-item label="状态:" prop="status">
-                          <el-select v-model="st.status" placeholder="请输入状态" size="mini"
-                                     style="width: 120px;">
-                            <el-option
-                              v-for="item in statusoptions"
-                              :key="item.value"
-                              :label="item.label"
-                              :value="item.value">
-                            </el-option>
-                          </el-select>
-                      </el-form-item>
-                    </el-col>
-                    <el-col :span="18">
+                    <el-col :span="24">
                       <el-form-item label="体检报告下载地址:" prop="reportLink">
                         <el-input size="mini" style="width: 100%" prefix-icon="el-icon-edit"
                                   v-model="st.reportLink" placeholder="请输入体检报告下载地址"></el-input>
@@ -460,6 +455,15 @@
                 this.title = '添加记录';
                 this.dialogVisible = true;
             },
+            tableRowClassName({row, rowIndex}) {
+              // console.log(rowIndex)
+              if (rowIndex === 0) {
+                return 'warning-row';
+              } 
+              return '';
+            },
+
+
             initSTs(type) {
                 this.loading = true;
                 let url = '/st/basic/?page=' + this.page + '&size=' + this.size;
@@ -526,4 +530,10 @@
         transform: translateX(10px);
         opacity: 0;
     }
+
+    .warning-row th {
+      background: #E6F7FF!important
+    }
+
+
 </style>

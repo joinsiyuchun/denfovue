@@ -1,6 +1,16 @@
-<template>
-    <div>
-        <el-form
+<template >
+
+    <div class="bgimage">
+      <div class="denfu_login">
+        <div class="denfu_info">
+          <img src="../assets/logo.png">
+          <div>
+            <span class="denfu_en">上海敦复医疗</span>
+            <span class="denfu_us">Shanghai Denfo Hospital</span>
+          </div>
+        </div>
+
+            <el-form
                 :rules="rules"
                 ref="loginForm"
                 v-loading="loading"
@@ -26,7 +36,9 @@
 <!--            <el-checkbox size="normal" class="loginRemember" v-model="checked"></el-checkbox>-->
             <el-button size="normal" type="primary" style="width: 100%;" @click="submitLogin">登录</el-button>
         </el-form>
+      </div>
     </div>
+
 </template>
 
 <script>
@@ -79,29 +91,51 @@
 </script>
 
 <style>
-    .loginContainer {
-        border-radius: 15px;
-        background-clip: padding-box;
-        margin: 180px auto;
-        width: 350px;
-        padding: 15px 35px 15px 35px;
-        background: #fff;
-        border: 1px solid #eaeaea;
-        box-shadow: 0 0 25px #cac6c6;
-    }
+.bgimage{
+  height: inherit;
+  background: url("../assets/background.png");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.denfu_login {
+  transform: translateY(-60px);
+}
+.denfu_info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 40px 0;
+}
+.denfu_info > div {
+  margin-left: 12px;
+}
 
-    .loginTitle {
-        margin: 15px auto 20px auto;
-        text-align: center;
-        color: #505458;
-    }
-
-    .loginRemember {
-        text-align: left;
-        margin: 0px 0px 15px 0px;
-    }
-    .el-form-item__content{
-        display: flex;
-        align-items: center;
-    }
+.denfu_en {
+  display: block;
+  color:#838487;
+  font-size: 42px;
+}
+.denfu_us {
+  display: block;
+  color:#838487;
+  font-size: 22px;
+  margin-top: 8px;
+}
+.loginContainer {
+  border-radius: 15px;
+  background-clip: padding-box;
+  margin: auto;
+  width: 400px;
+  padding: 15px 35px 15px 35px;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 0 25px #cac6c6;
+}
+.loginTitle {
+  margin: 15px auto 20px auto;
+  text-align: center;
+  color: #505458;
+}
 </style>
+
